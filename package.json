@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git://github.com/JustBlackBird/gulp-phpcs.git"
   },
+  "bugs": {
+    "url": "https://github.com/JustBlackBird/gulp-phpcs/issues"
+  },
   "author": {
     "name": "Dmitriy Simushev",
     "email": "simushevds@gmail.com"
