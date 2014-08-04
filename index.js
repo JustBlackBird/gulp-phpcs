@@ -44,7 +44,7 @@ module.exports = function(options) {
         }
 
         // Run code sniffer
-        var phpcs = exec(buildCommand(options), function(error, stdout, stderr) {
+        var phpcs = exec(buildCommand(options) + ' ' + file.path, function(error, stdout, stderr) {
             if (error) {
                 // Something went wrong. Notify gulp about the problem
                 var errorMessage = error + '\n    ';
@@ -53,14 +53,15 @@ module.exports = function(options) {
                         + stdout.replace(/\n/g, '\n    ');
                 }
 
-                stream.emit('error', new gutil.PluginError('gulp-phpcs', errorMessage, {fileName: file.path}));
+                gutil.log('PHP Code Sniffer error: ' + file.path);
+                gutil.log(stdout.replace(/\n/g, '\n    '));
             }
             stream.push(file);
             cb();
         });
 
         // Pass content of the file as STDIN to Code Sniffer
-        phpcs.stdin.write(file.contents);
-        phpcs.stdin.end();
+        //phpcs.stdin.write(file.contents);
+        //phpcs.stdin.end();
     });
 }
