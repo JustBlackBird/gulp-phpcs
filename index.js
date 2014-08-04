@@ -53,7 +53,8 @@ module.exports = function(options) {
                         + stdout.replace(/\n/g, '\n    ');
                 }
 
-                stream.emit('error', new gutil.PluginError('gulp-phpcs', errorMessage, {fileName: file.path}));
+                gutil.log('PHP Code Sniffer error: ' + file.path);
+                gutil.log(stdout.replace(/\n/g, '\n    '));
             }
             stream.push(file);
             cb();
