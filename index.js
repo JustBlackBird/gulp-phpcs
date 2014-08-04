@@ -44,7 +44,7 @@ module.exports = function(options) {
         }
 
         // Run code sniffer
-        var phpcs = exec(buildCommand(options), function(error, stdout, stderr) {
+        var phpcs = exec(buildCommand(options) + ' ' + file.path, function(error, stdout, stderr) {
             if (error) {
                 // Something went wrong. Notify gulp about the problem
                 var errorMessage = error + '\n    ';
