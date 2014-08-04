@@ -61,7 +61,7 @@ module.exports = function(options) {
         });
 
         // Pass content of the file as STDIN to Code Sniffer
-        phpcs.stdin.write(file.contents);
-        phpcs.stdin.end();
+        //phpcs.stdin.write(file.contents);
+        //phpcs.stdin.end();
     });
 }
