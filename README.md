@@ -1,4 +1,4 @@
-# gulp-phpcs
+# gulp-phpcs [![NPM version](https://badge.fury.io/js/gulp-phpcs.svg)](http://badge.fury.io/js/gulp-phpcs)
 
 > Gulp plugin for running [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer).
 
