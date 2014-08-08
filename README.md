@@ -22,12 +22,14 @@ var phpcs = require('gulp-phpcs');
 
 gulp.task('default', function () {
     return gulp.src(['src/**/*.php', '!src/vendor/**/*.*'])
-        // Pass in options to the task
+        // Validate files using PHP Code Sniffer
         .pipe(phpcs({
             bin: 'src/vendor/bin/phpcs',
             standard: 'PSR2',
             warningSeverity: 0
-        }));
+        }))
+        // Log all problems that was found
+        .pipe(phpcs.reporter('log'));
 });
 ```
 
@@ -75,6 +77,32 @@ Type: `String`
 The name or path of the coding standard to use.
 
 This option is equivalent to Code Sniffer `--standard="<standard>"` option.
+
+### phpcs.reporter(name)
+
+Loads one of the reporters that shipped with the plugin (see below).
+
+#### name
+
+Type `String`
+
+The name of the reporter that should be loaded.
+
+
+## Reporters
+
+The plugin only pass files through PHP Code Sniffer. To process the results of
+the check one should use a reporter. Reporters are plugins too, so one can pipe
+a files stream to them. Several repotrers can be used on a stream, just like
+any other plugins.
+
+These reporters are shipped with the plugin:
+
+1. Fail reporter - fails if a problem was found. Use `phpcs.reporter('fail')`
+to load it.
+
+2. Log reporter - outputs all problems to the console. Use
+`phpcs.reporter('log')` to load it.
 
 
 ## License
