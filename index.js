@@ -1,8 +1,13 @@
-var gutil = require('gulp-util');
-var through = require('through2');
-var exec = require('child_process').exec;
-var reporterLoader = require('./reporters');
+var gutil = require('gulp-util'),
+    through = require('through2'),
+    exec = require('child_process').exec;
 
+/**
+ * Builds shell command for PHP Code Sniffer according to specified options.
+ *
+ * @param {Object} opt List of PHP Code Sniffer options.
+ * @returns {String} Shell command with all needed flags.
+ */
 var buildCommand = function(opt) {
     var opt = opt || {};
     var command = opt.bin || 'phpcs';
@@ -26,20 +31,20 @@ var buildCommand = function(opt) {
     return command;
 }
 
-module.exports = function(options) {
-    return through.obj(function(file, enc, cb) {
+var phpcsPlugin = function(options) {
+    return through.obj(function(file, enc, callback) {
         var stream = this;
 
         if (file.isNull()) {
             stream.push(file);
-            cb();
+            callback();
 
             return;
         }
 
         if (file.isStream()) {
             stream.emit('error', new gutil.PluginError('gulp-phpcs', 'Streams are not supported'));
-            cb();
+            callback();
 
             return;
         }
@@ -60,7 +65,7 @@ module.exports = function(options) {
 
             file.phpcsReport = report;
             stream.push(file);
-            cb();
+            callback();
         });
 
         // Pass content of the file as STDIN to Code Sniffer
@@ -70,4 +75,6 @@ module.exports = function(options) {
 }
 
 // Attach reporters loader to the plugin.
-module.exports.reporter = reporterLoader;
+phpcsPlugin.reporter = require('./reporters');
+
+module.exports = phpcsPlugin;

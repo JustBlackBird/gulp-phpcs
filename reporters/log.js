@@ -11,7 +11,7 @@ var gutil = require('gulp-util'),
  * @returns {Function}
  */
 module.exports = function() {
-    return through.obj(function(file, enc, cb) {
+    return through.obj(function(file, enc, callback) {
         var report = file.phpcsReport || {};
 
         if (report.error) {
@@ -24,6 +24,6 @@ module.exports = function() {
         }
 
         this.push(file);
-        cb();
+        callback();
     });
 }

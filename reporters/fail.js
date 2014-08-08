@@ -11,7 +11,7 @@ var gutil = require('gulp-util'),
  * @returns {Function}
  */
 module.exports = function() {
-    return through.obj(function(file, enc, cb) {
+    return through.obj(function(file, enc, callback) {
         var report = file.phpcsReport || {};
 
         if (report.error) {
@@ -19,12 +19,12 @@ module.exports = function() {
                 + ' on ' + chalk.magenta(file.path);
 
             this.emit('error', new gutil.PluginError('gulp-phpcs', errorMessage));
-            cb();
+            callback();
 
             return;
         }
 
         this.push(file);
-        cb();
+        callback();
     });
 }
