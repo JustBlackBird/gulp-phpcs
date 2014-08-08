@@ -1,6 +1,7 @@
 var gutil = require('gulp-util');
 var through = require('through2');
 var exec = require('child_process').exec;
+var reporterLoader = require('./reporters');
 
 var buildCommand = function(opt) {
     var opt = opt || {};
@@ -45,16 +46,19 @@ module.exports = function(options) {
 
         // Run code sniffer
         var phpcs = exec(buildCommand(options), function(error, stdout, stderr) {
-            if (error) {
-                // Something went wrong. Notify gulp about the problem
-                var errorMessage = error + '\n    ';
-                if (stdout) {
-                    errorMessage += 'PHP Code Sniffer output:\n    '
-                        + stdout.replace(/\n/g, '\n    ');
-                }
-
-                stream.emit('error', new gutil.PluginError('gulp-phpcs', errorMessage, {fileName: file.path}));
+            var report = {
+                error: false,
+                output: ''
             }
+
+            if (error) {
+                // Something went wrong. Attache report to the file to allow
+                // reporters do their job.
+                report.error = error;
+                report.output = stdout;
+            }
+
+            file.phpcsReport = report;
             stream.push(file);
             cb();
         });
@@ -64,3 +68,6 @@ module.exports = function(options) {
         phpcs.stdin.end();
     });
 }
+
+// Attach reporters loader to the plugin.
+module.exports.reporter = reporterLoader;
