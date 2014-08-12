@@ -40,7 +40,7 @@ gulp.task('default', function () {
 
 #### options.bin
 
-Type `string`
+Type: `String`
 
 Default: `'phpcs'`
 
@@ -84,7 +84,7 @@ Loads one of the reporters that shipped with the plugin (see below).
 
 #### name
 
-Type `String`
+Type: `String`
 
 The name of the reporter that should be loaded.
 
