@@ -29,7 +29,7 @@ var buildCommand = function(opt) {
     }
 
     if (opt.hasOwnProperty('encoding')) {
-        command += ' --encoding=' + opt.encoding;
+        command += ' --encoding="' + opt.encoding + '"';
     }
 
     return command;
