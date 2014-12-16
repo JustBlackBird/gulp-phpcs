@@ -28,6 +28,10 @@ var buildCommand = function(opt) {
         command += ' --error-severity=' + parseInt(opt.errorSeverity);
     }
 
+    if (opt.hasOwnProperty('encoding')) {
+        command += ' --encoding="' + opt.encoding + '"';
+    }
+
     return command;
 }
 
