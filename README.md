@@ -78,6 +78,14 @@ The name or path of the coding standard to use.
 
 This option is equivalent to Code Sniffer `--standard="<standard>"` option.
 
+#### options.encoding
+
+Type: `String`
+
+The encoding of the files being checked.
+
+This option is equivalent to Code Sniffer `--encoding="<encoding>"` option.
+
 ### phpcs.reporter(name)
 
 Loads one of the reporters that shipped with the plugin (see below).
