@@ -1,0 +1,2 @@
+# Do not index npm modules
+node_modules
