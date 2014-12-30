@@ -86,6 +86,14 @@ The encoding of the files being checked.
 
 This option is equivalent to Code Sniffer `--encoding="<encoding>"` option.
 
+#### options.sniffCodes
+
+Type: `Boolean`
+
+Display sniff codes in the report.
+
+This option is equivalent to Code Sniffer `-s` option.
+
 ### phpcs.reporter(name)
 
 Loads one of the reporters that shipped with the plugin (see below).
