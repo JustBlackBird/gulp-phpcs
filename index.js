@@ -32,7 +32,7 @@ var buildCommand = function(opt) {
         command += ' --encoding="' + opt.encoding + '"';
     }
 
-    if (opt.hasOwnProperty('sniffCodes')) {
+    if (opt.hasOwnProperty('showSniffCode')) {
         command += ' -s';
     }
 

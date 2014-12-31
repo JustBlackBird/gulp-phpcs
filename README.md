@@ -86,7 +86,7 @@ The encoding of the files being checked.
 
 This option is equivalent to Code Sniffer `--encoding="<encoding>"` option.
 
-#### options.sniffCodes
+#### options.showSniffCode
 
 Type: `Boolean`
 
