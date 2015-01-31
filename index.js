@@ -76,6 +76,9 @@ var phpcsPlugin = function(options) {
             callback();
         });
 
+        // Pass the file name to Code Sniffer to support exclude patterns
+        phpcs.stdin.write('phpcs_input_file: ' + file.path);
+
         // Pass content of the file as STDIN to Code Sniffer
         phpcs.stdin.write(file.contents);
         phpcs.stdin.end();
