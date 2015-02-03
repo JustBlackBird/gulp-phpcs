@@ -20,7 +20,7 @@
     "phpcs"
   ],
   "dependencies": {
-    "gulp-util": "^3.0.1",
+    "gulp-util": "^3.0.3",
     "through2": "^0.6.3",
     "chalk": "^0.5.1"
   }
