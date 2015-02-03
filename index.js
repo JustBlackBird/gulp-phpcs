@@ -76,6 +76,13 @@ var phpcsPlugin = function(options) {
             callback();
         });
 
+		var eol = String(file.contents).match(/\r\n?/);
+
+		eol = eol ? eol : '\n';
+
+        // Pass the file name to Code Sniffer to support exclude patterns
+        phpcs.stdin.write('phpcs_input_file: ' + file.path + eol);
+
         // Pass content of the file as STDIN to Code Sniffer
         phpcs.stdin.write(file.contents);
         phpcs.stdin.end();
