@@ -5,11 +5,11 @@ var gutil = require('gulp-util'),
 /**
  * Builds shell command for PHP Code Sniffer according to specified options.
  *
- * @param {Object} opt List of PHP Code Sniffer options.
+ * @param {Object} options List of PHP Code Sniffer options.
  * @returns {String} Shell command with all needed flags.
  */
-var buildCommand = function(opt) {
-    var opt = opt || {};
+var buildCommand = function(options) {
+    var opt = options || {};
     var command = opt.bin || 'phpcs';
 
     if (opt.hasOwnProperty('standard')) {
@@ -41,7 +41,7 @@ var buildCommand = function(opt) {
     }
 
     return command;
-}
+};
 
 var phpcsPlugin = function(options) {
     return through.obj(function(file, enc, callback) {
@@ -66,7 +66,7 @@ var phpcsPlugin = function(options) {
             var report = {
                 error: false,
                 output: ''
-            }
+            };
 
             if (error) {
                 // Something went wrong. Attache report to the file to allow
@@ -91,7 +91,7 @@ var phpcsPlugin = function(options) {
         phpcs.stdin.write(file.contents);
         phpcs.stdin.end();
     });
-}
+};
 
 // Attach reporters loader to the plugin.
 phpcsPlugin.reporter = require('./reporters');
