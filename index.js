@@ -35,7 +35,7 @@ var buildCommand = function(opt) {
     if (opt.hasOwnProperty('showSniffCode')) {
         command += ' -s';
     }
-    
+
     if (opt.hasOwnProperty('colors') && opt.colors) {
         command += ' --colors';
     }
