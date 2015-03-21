@@ -94,6 +94,16 @@ Display sniff codes in the report.
 
 This option is equivalent to Code Sniffer `-s` option.
 
+#### options.colors
+
+Type: `Boolean`
+
+Pass colorized output of Code Sniffer to reporters.
+
+This option is equivalent to Code Sniffer `--colors` option.
+
+**Warning**: This options is only compatible with 2.x branch of Code Sniffer.
+
 ### phpcs.reporter(name)
 
 Loads one of the reporters that shipped with the plugin (see below).
