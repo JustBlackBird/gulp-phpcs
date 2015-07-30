@@ -38,7 +38,16 @@ var buildCommand = function(options) {
 
     if (opt.hasOwnProperty('colors') && opt.colors) {
         command += ' --colors';
+    } 
+	
+    if (opt.hasOwnProperty('report') && opt.report) {
+        command += ' --report="' + opt.report + '"' ;
     }
+
+    if (opt.hasOwnProperty('reportFile') && opt.reportFile) {
+        command += ' --report-file="' + opt.reportFile + '"' ;
+    }
+
 
     return command;
 };
