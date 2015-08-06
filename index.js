@@ -1,6 +1,7 @@
 var gutil = require('gulp-util'),
     through = require('through2'),
-    exec = require('child_process').exec;
+    exec = require('child_process').exec,
+    path = require('path');
 
 /**
  * Builds shell command for PHP Code Sniffer according to specified options.
@@ -10,7 +11,7 @@ var gutil = require('gulp-util'),
  */
 var buildCommand = function(options) {
     var opt = options || {};
-    var command = opt.bin || 'phpcs';
+    var command = path.normalize(opt.bin) || 'phpcs';
 
     if (opt.hasOwnProperty('standard')) {
         command += ' --standard="' + opt.standard + '"';
