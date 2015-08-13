@@ -94,6 +94,14 @@ Display sniff codes in the report.
 
 This option is equivalent to Code Sniffer `-s` option.
 
+#### options.sniffs
+
+Type: `Array`
+
+Filter for executed Sniffs
+
+This option is equivalent to Code Sniffer `--sniffs` option.
+
 #### options.colors
 
 Type: `Boolean`

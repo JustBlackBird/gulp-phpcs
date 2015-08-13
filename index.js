@@ -8,7 +8,7 @@ var gutil = require('gulp-util'),
  * @param {Object} options List of PHP Code Sniffer options.
  * @returns {String} Shell command with all needed flags.
  */
-var buildCommand = function(options) {
+var buildCommand = function (options) {
     var opt = options || {};
     var command = opt.bin || 'phpcs';
 
@@ -36,6 +36,10 @@ var buildCommand = function(options) {
         command += ' -s';
     }
 
+    if (opt.hasOwnProperty('sniffs') && typeof opt.sniffs === 'object' && opt.sniffs.length !== 0) {
+        command += ' --sniffs=' + opt.sniffs.join(',');
+    }
+
     if (opt.hasOwnProperty('colors') && opt.colors) {
         command += ' --colors';
     }
@@ -43,8 +47,8 @@ var buildCommand = function(options) {
     return command;
 };
 
-var phpcsPlugin = function(options) {
-    return through.obj(function(file, enc, callback) {
+var phpcsPlugin = function (options) {
+    return through.obj(function (file, enc, callback) {
         var stream = this;
 
         if (file.isNull()) {
@@ -62,7 +66,7 @@ var phpcsPlugin = function(options) {
         }
 
         // Run code sniffer
-        var phpcs = exec(buildCommand(options), function(error, stdout, stderr) {
+        var phpcs = exec(buildCommand(options), function (error, stdout, stderr) {
             var report = {
                 error: false,
                 output: ''
