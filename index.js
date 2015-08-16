@@ -36,8 +36,8 @@ var buildCommand = function(options) {
         command += ' -s';
     }
 
-    if (opt.hasOwnProperty('sniffs') && typeof opt.sniffs === 'object' && opt.sniffs.length !== 0) {
-        command += ' --sniffs=' + opt.sniffs.join(',');
+    if (opt.hasOwnProperty('sniffs') && Array.isArray(opt.sniffs) && opt.sniffs.length !== 0) {
+        command += ' --sniffs="' + opt.sniffs.join(',') + '"';
     }
 
     if (opt.hasOwnProperty('colors') && opt.colors) {
