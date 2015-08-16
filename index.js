@@ -47,8 +47,8 @@ var buildCommand = function(options) {
     return command;
 };
 
-var phpcsPlugin = function (options) {
-    return through.obj(function (file, enc, callback) {
+var phpcsPlugin = function(options) {
+    return through.obj(function(file, enc, callback) {
         var stream = this;
 
         if (file.isNull()) {
@@ -66,7 +66,7 @@ var phpcsPlugin = function (options) {
         }
 
         // Run code sniffer
-        var phpcs = exec(buildCommand(options), function (error, stdout, stderr) {
+        var phpcs = exec(buildCommand(options), function(error, stdout, stderr) {
             var report = {
                 error: false,
                 output: ''
