@@ -8,7 +8,7 @@ var gutil = require('gulp-util'),
  * @param {Object} options List of PHP Code Sniffer options.
  * @returns {String} Shell command with all needed flags.
  */
-var buildCommand = function (options) {
+var buildCommand = function(options) {
     var opt = options || {};
     var command = opt.bin || 'phpcs';
 
