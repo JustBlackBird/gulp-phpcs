@@ -67,6 +67,17 @@ var phpcsPlugin = function(options) {
 
         // Run code sniffer
         var phpcs = exec(buildCommand(options), function(error, stdout, stderr) {
+            // Check if Code Sniffer returned non-zero exit code to expose a real
+            // error and not a codding style problem. On codding style problems "1"
+            // is used as the exit code.
+            if (error && error.code !== 1) {
+                error.stdout = stdout;
+                stream.emit('error', new gutil.PluginError('gulp-phpcs', error));
+                callback();
+
+                return;
+            }
+
             var report = {
                 error: false,
                 output: ''
@@ -75,7 +86,7 @@ var phpcsPlugin = function(options) {
             if (error) {
                 // Something went wrong. Attache report to the file to allow
                 // reporters do their job.
-                report.error = error;
+                report.error = true;
                 report.output = stdout;
             }
 
@@ -88,7 +99,8 @@ var phpcsPlugin = function(options) {
         var matches = /\r\n?|\n/.exec(file.contents.toString()),
             eol = matches ? matches[0] : '\n';
 
-        // Pass the file name to Code Sniffer
+        // Pass the file name to Code Sniffer. This is needed to
+        // get the correct error message from Code Sniffer.
         phpcs.stdin.write('phpcs_input_file: ' + file.path + eol);
 
         // Pass content of the file as STDIN to Code Sniffer

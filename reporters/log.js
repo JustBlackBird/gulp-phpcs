@@ -17,8 +17,6 @@ module.exports = function() {
         if (report.error) {
             var message = 'PHP Code Sniffer found a ' + chalk.yellow('problem')
                 + ' in ' + chalk.magenta(file.path) + '\n'
-                + 'Message:\n    '
-                + report.error + '\n    '
                 + report.output.replace(/\n/g, '\n    ');
             gutil.log(message);
         }
