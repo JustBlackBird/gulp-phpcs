@@ -2,23 +2,23 @@ var gutil = require('gulp-util'),
     fs = require('fs');
 
 /**
- * Loads reporter by its name.
+ * Loads fail reporter by its name.
  *
- * The function works only with reporters that shipped with the plugin.
+ * The function works only with fail reporters that shipped with the plugin.
  *
- * @param {String} name Name of a reporter to load.
+ * @param {String} name [fail] Name of a fail reporter to load.
  * @param {Object} options Custom options object that will be passed to
  *   a reporter.
  * @returns {Function}
  */
 module.exports = function(name, options) {
     if (typeof name !== 'string') {
-        throw new gutil.PluginError('gulp-phpcs', 'Reporter name must be a string');
+        name = 'fail';
     }
 
     var fileName = __dirname + '/' + name + '.js';
     if (name === 'index' || !fs.existsSync(fileName)) {
-        throw new gutil.PluginError('gulp-phpcs', 'There is no reporter "' + name + '"');
+        throw new gutil.PluginError('gulp-phpcs', 'There is no fail reporter "' + name + '"');
     }
 
     return require(fileName)(options || {});

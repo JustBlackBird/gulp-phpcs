@@ -44,6 +44,14 @@ var buildCommand = function(opts) {
         args.push('--colors');
     }
 
+    if (opt.hasOwnProperty('report') && opt.report) {
+        command += ' --report="' + opt.report + '"' ;
+    }
+
+    if (opt.hasOwnProperty('reportFile') && opt.reportFile) {
+        command += ' --report-file="' + opt.reportFile + '"' ;
+    }
+
     return {
         bin: opts.bin || 'phpcs',
         args: args
@@ -179,7 +187,7 @@ var phpcsPlugin = function(options) {
     });
 };
 
-// Attach reporters loader to the plugin.
-phpcsPlugin.reporter = require('./reporters');
+// Add possibility to fail on an error and output via a reporter
+phpcsPlugin.failOnError = require('./fail-reporter');
 
 module.exports = phpcsPlugin;
