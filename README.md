@@ -112,27 +112,39 @@ This option is equivalent to Code Sniffer `--colors` option.
 
 **Warning**: This options is only compatible with 2.x branch of Code Sniffer.
 
-### phpcs.reporter(name)
-
-Loads one of the reporters that shipped with the plugin (see below).
-
-#### name
+#### options.report
 
 Type: `String`
 
-The name of the reporter that should be loaded.
+Pass the type of the report which sould be generated.
+
+#### options.reportFile
+
+Type: `String`
+
+Path where the generated report should be stored.
+
+### phpcs.failOnError(type)
+
+Loads one of the fail reporters that shipped with the plugin (see below).
+
+#### type
+
+Type: `String`
+
+Default: 'fail'
+
+The type of the reporter that should be loaded.
 
 
-## Reporters
+## Fail on Error
 
 The plugin only pass files through PHP Code Sniffer. To process the results of
-the check one should use a reporter. Reporters are plugins too, so one can pipe
-a files stream to them. Several repotrers can be used on a stream, just like
-any other plugins.
+the check and notify about an error one should use a fail reporter. Fail reporters are plugins too, so one can pipe a files stream to them. Several fail reporters can be used on a stream, just like any other plugins.
 
-These reporters are shipped with the plugin:
+These fail reporters are shipped with the plugin:
 
-1. Fail reporter - fails if a problem was found. Use `phpcs.reporter('fail')`
+1. Fail reporter - fails if a problem was found. Use `phpcs.failOnError()`
 to load it.
 
 2. Log reporter - outputs all problems to the console. Use
