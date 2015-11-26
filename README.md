@@ -112,7 +112,7 @@ This option is equivalent to Code Sniffer `--colors` option.
 
 **Warning**: This options is only compatible with 2.x branch of Code Sniffer.
 
-### phpcs.reporter(name)
+### phpcs.reporter(name[, options])
 
 Loads one of the reporters that shipped with the plugin (see below).
 
@@ -121,6 +121,12 @@ Loads one of the reporters that shipped with the plugin (see below).
 Type: `String`
 
 The name of the reporter that should be loaded.
+
+#### options
+
+Type: `Object`
+
+Options for the reporter if needed.
 
 
 ## Reporters
@@ -137,6 +143,9 @@ to load it.
 
 2. Log reporter - outputs all problems to the console. Use
 `phpcs.reporter('log')` to load it.
+
+3. File reporter - outputs all problems to a file. Use
+`phpcs.reporter('file', { path: "path/to/report.txt" })` to load it.
 
 
 ## License
