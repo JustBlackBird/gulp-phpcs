@@ -44,12 +44,12 @@ var buildCommand = function(opts) {
         args.push('--colors');
     }
 
-    if (opt.hasOwnProperty('report') && opt.report) {
-        command += ' --report="' + opt.report + '"' ;
+    if (opts.hasOwnProperty('report') && opts.report) {
+        command += ' --report="' + opts.report + '"' ;
     }
 
-    if (opt.hasOwnProperty('reportFile') && opt.reportFile) {
-        command += ' --report-file="' + opt.reportFile + '"' ;
+    if (opts.hasOwnProperty('reportFile') && opts.reportFile) {
+        command += ' --report-file="' + opts.reportFile + '"' ;
     }
 
     return {
