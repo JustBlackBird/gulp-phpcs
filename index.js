@@ -45,11 +45,11 @@ var buildCommand = function(opts) {
     }
 
     if (opts.hasOwnProperty('report') && opts.report) {
-        command += ' --report="' + opts.report + '"' ;
+        args.push('--report=' + opts.report + '');
     }
 
     if (opts.hasOwnProperty('reportFile') && opts.reportFile) {
-        command += ' --report-file="' + opts.reportFile + '"' ;
+        args.push('--report-file=' + opts.reportFile + '');
     }
 
     return {
