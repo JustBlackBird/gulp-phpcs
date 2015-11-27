@@ -28,6 +28,6 @@
     "jshint": "^2.6.3"
   },
   "scripts": {
-    "jshint": "node ./node_modules/.bin/jshint index.js"
+    "jshint": "node ./node_modules/.bin/jshint index.js reporters/*.js"
   }
 }
