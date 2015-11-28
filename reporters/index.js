@@ -22,4 +22,4 @@ module.exports = function(name, options) {
     }
 
     return require(fileName)(options || {});
-}
+};

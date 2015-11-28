@@ -15,13 +15,13 @@ module.exports = function() {
         var report = file.phpcsReport || {};
 
         if (report.error) {
-            var message = 'PHP Code Sniffer found a ' + chalk.yellow('problem')
-                + ' in ' + chalk.magenta(file.path) + '\n'
-                + report.output.replace(/\n/g, '\n    ');
+            var message = 'PHP Code Sniffer found a ' + chalk.yellow('problem') +
+                ' in ' + chalk.magenta(file.path) + '\n' +
+                report.output.replace(/\n/g, '\n    ');
             gutil.log(message);
         }
 
         this.push(file);
         callback();
     });
-}
+};

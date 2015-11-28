@@ -139,11 +139,11 @@ var phpcsPlugin = function(options) {
             return;
         }
 
-        runCodeSniffer(command.bin, command.args, file, function(error, exitCode, output) {
-            if (error) {
+        runCodeSniffer(command.bin, command.args, file, function(runError, exitCode, output) {
+            if (runError) {
                 // Something is totally wrong. It seems that execution of Code Sniffer
                 // failed (not because of non-zero exit code of PHPCS).
-                stream.emit('error', new gutil.PluginError('gulp-phpcs', error));
+                stream.emit('error', new gutil.PluginError('gulp-phpcs', runError));
                 callback();
 
                 return;
@@ -152,9 +152,9 @@ var phpcsPlugin = function(options) {
             if (exitCode > 1) {
                 // On codding style problems Code Sniffer should exists with "1" code.
                 // All other non-zero exit codes should be treated as Code Sniffer errors.
-                var error = new gutil.PluginError('gulp-phpcs', 'Execution of Code Sniffer Failed');
-                error.stdout = output;
-                stream.emit('error', error);
+                var phpcsError = new gutil.PluginError('gulp-phpcs', 'Execution of Code Sniffer Failed');
+                phpcsError.stdout = output;
+                stream.emit('error', phpcsError);
                 callback();
 
                 return;

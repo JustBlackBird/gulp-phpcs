@@ -15,8 +15,8 @@ module.exports = function() {
         var report = file.phpcsReport || {};
 
         if (report.error) {
-            var errorMessage = 'PHP Code Sniffer failed'
-                + ' on ' + chalk.magenta(file.path);
+            var errorMessage = 'PHP Code Sniffer failed' +
+                ' on ' + chalk.magenta(file.path);
 
             this.emit('error', new gutil.PluginError('gulp-phpcs', errorMessage));
             callback();
@@ -27,4 +27,4 @@ module.exports = function() {
         this.push(file);
         callback();
     });
-}
+};
