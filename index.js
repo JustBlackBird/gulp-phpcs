@@ -96,7 +96,7 @@ var runCodeSniffer = function(bin, args, file, callback) {
     });
 
     phpcs.stdin.on('error', function(error) {
-        // Just ignore this event because it an error (with more
+        // Just ignore this event because an error (with more
         // detailed description) should also be emitted at spawned
         // process instance.
     });
