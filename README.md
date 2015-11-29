@@ -1,4 +1,4 @@
-# gulp-phpcs [![NPM version](https://badge.fury.io/js/gulp-phpcs.png)](https://www.npmjs.org/package/gulp-phpcs) [![Build Status](https://travis-ci.org/JustBlackBird/gulp-phpcs.svg)](https://travis-ci.org/JustBlackBird/gulp-phpcs)
+# gulp-phpcs [![NPM version](https://img.shields.io/npm/v/gulp-phpcs.svg)](https://www.npmjs.org/package/gulp-phpcs) [![Build Status](https://travis-ci.org/JustBlackBird/gulp-phpcs.svg)](https://travis-ci.org/JustBlackBird/gulp-phpcs)
 
 > Gulp plugin for running [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer).
 
