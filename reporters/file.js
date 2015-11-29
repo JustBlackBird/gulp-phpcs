@@ -12,9 +12,13 @@ var fs = require('fs'),
  * @returns {Function}
  */
 module.exports = function(options) {
+    // Show the user an error message if no path is defined.
+    if (!options.path) {
+        throw new gutil.PluginError('gulp-phpcs', 'You have to specify a path for the file reporter!');
+    }
+
     var errors = 0,
-        output = '',
-        message;
+        output = '';
 
     return through.obj(
         function(file, enc, callback) {
@@ -27,29 +31,30 @@ module.exports = function(options) {
 
                 // add error to output
                 output += report.output +
-                          '\n\n\n'; // seperate the different outputs
+                    // Separate different outputs
+                    '\n\n\n';
             }
 
             this.push(file);
             callback();
         },
 
-        // after we collected all errors, output them to the defined file
+        // After we collected all errors, output them to the defined file.
         function(callback) {
-            // show the user an error message if no path is defined
-            if (!options.path) {
-                gutil.log(chalk.red('You have to define a path for the file reporter!'));
-                callback();
-                return;
-            }
+            var stream = this;
 
-            // write the error output to the defined file
+            // Write the error output to the defined file
             fs.writeFile(options.path, output.trim(), function(err) {
-                if (err) throw err;
+                if (err) {
+                    stream.emit('error', new gutil.PluginError('gulp-phpcs', error));
+                    callback();
 
-                // build console info message
-                message = 'Your report with ' + errors + ' error' + ((errors !== 1) ? 's ' : ' ') +
-                          'got written to "' + options.path + '"';
+                    return;
+                }
+
+                // Build console info message
+                var message = 'Your report with ' + errors + ' error' + ((errors !== 1) ? 's ' : ' ') +
+                    'got written to "' + options.path + '"';
 
                 // output console info message
                 if (errors) {
@@ -62,4 +67,4 @@ module.exports = function(options) {
             });
         }
     );
-}
+};
