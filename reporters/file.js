@@ -1,7 +1,7 @@
-var gutil   = require('gulp-util'),
+var fs = require('fs'),
+    gutil = require('gulp-util'),
     through = require('through2'),
-    chalk   = require('chalk'),
-    fs      = require('fs');
+    chalk = require('chalk');
 
 /**
  * Returns "file" reporter.
@@ -44,20 +44,22 @@ module.exports = function(options) {
             }
 
             // write the error output to the defined file
-            fs.writeFile(options.path, output.trim());
+            fs.writeFile(options.path, output.trim(), function(err) {
+                if (err) throw err;
 
-            // build console info message
-            message = 'Your report with ' + errors + ' error' + ((errors !== 1) ? 's ' : ' ') +
-                      'got written to "' + options.path + '"';
+                // build console info message
+                message = 'Your report with ' + errors + ' error' + ((errors !== 1) ? 's ' : ' ') +
+                          'got written to "' + options.path + '"';
 
-            // output console info message
-            if (errors) {
-                gutil.log(chalk.red(message));
-            } else {
-                gutil.log(chalk.green(message));
-            }
+                // output console info message
+                if (errors) {
+                    gutil.log(chalk.red(message));
+                } else {
+                    gutil.log(chalk.green(message));
+                }
 
-            callback();
+                callback();
+            });
         }
     );
 }
