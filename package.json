@@ -32,7 +32,7 @@
     "sinon": "^1.17.2"
   },
   "scripts": {
-    "jshint": "node ./node_modules/.bin/jshint index.js reporters/*.js",
-    "test": "node ./node_modules/.bin/mocha --recursive test"
+    "jshint": "jshint index.js reporters",
+    "test": "mocha --recursive test"
   }
 }
