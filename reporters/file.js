@@ -13,7 +13,7 @@ var fs = require('fs'),
  */
 module.exports = function(options) {
     // Show the user an error message if no path is defined.
-    if (!options.path) {
+    if (!options || !options.path) {
         throw new gutil.PluginError('gulp-phpcs', 'You have to specify a path for the file reporter!');
     }
 
