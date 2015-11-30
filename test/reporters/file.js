@@ -103,7 +103,11 @@ describe('File reporter', function() {
             var reporter = fileReporter({path: '/reports/errors.log'});
 
             reporter.pipe(blackHole(function() {
+                // Make sure the file was not created.
                 expect(fileExists('/reports/errors.log')).to.be.false;
+                // Make sure no messages was written to gulp log.
+                expect(logStub.called).to.be.false;
+
                 done();
             }));
 
@@ -115,7 +119,11 @@ describe('File reporter', function() {
             var reporter = fileReporter({path: '/reports/errors.log'});
 
             reporter.pipe(blackHole(function() {
+                // Make sure the file was not created.
                 expect(fileExists('/reports/errors.log')).to.be.false;
+                // Make sure no messages was written to gulp log.
+                expect(logStub.called).to.be.false;
+
                 done();
             }));
 

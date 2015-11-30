@@ -22,7 +22,8 @@
   "dependencies": {
     "gulp-util": "^3.0.3",
     "through2": "^0.6.3",
-    "chalk": "^0.5.1"
+    "chalk": "^0.5.1",
+    "pluralize": "^1.2.1"
   },
   "devDependencies": {
     "jshint": "^2.6.3",

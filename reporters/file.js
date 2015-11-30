@@ -1,7 +1,9 @@
 var fs = require('fs'),
+    util = require('util'),
     gutil = require('gulp-util'),
     through = require('through2'),
-    chalk = require('chalk');
+    chalk = require('chalk'),
+    pluralize = require('pluralize');
 
 /**
  * Returns "file" reporter.
@@ -61,15 +63,14 @@ module.exports = function(options) {
                 }
 
                 // Build console info message
-                var message = 'Your report with ' + errors + ' error' + ((errors !== 1) ? 's ' : ' ') +
-                    'got written to "' + options.path + '"';
+                var message = util.format(
+                    'Your report with %s got written to "%s"',
+                    chalk.red(pluralize('error', errors, true)),
+                    chalk.magenta(options.path)
+                );
 
-                // output console info message
-                if (errors) {
-                    gutil.log(chalk.red(message));
-                } else {
-                    gutil.log(chalk.green(message));
-                }
+                // And output it.
+                gutil.log(message);
 
                 callback();
             });
