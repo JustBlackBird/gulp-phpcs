@@ -26,15 +26,15 @@ describe('Log reporter', function() {
             expect(args).to.be.an.instanceof(Array);
             expect(args).to.have.length(1);
             // Make sure PHPCS output is reported
-            expect(args[0]).match(/test PHPCS output/);
+            expect(args[0]).to.contain('test PHPCS output');
             // Make sure file name is reported
-            expect(args[0]).match(/\/test\/bad_file\.php/);
+            expect(args[0]).to.contain('/src/bad_file.php');
 
             done();
         });
 
         var fakeFile = new File({
-            path: '/test/bad_file.php'
+            path: '/src/bad_file.php'
         });
 
         fakeFile.phpcsReport = {

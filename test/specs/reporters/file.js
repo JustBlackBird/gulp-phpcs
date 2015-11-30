@@ -88,7 +88,6 @@ describe('File reporter', function() {
                 // Make sure appropriate error message is written to gulp log.
                 expect(logStub.calledOnce).to.be.true;
                 var logArgs = logStub.firstCall.args;
-                expect(logArgs).to.be.an.instanceof(Array)
                 expect(logArgs).to.have.length(1);
                 expect(logArgs[0]).to.contain('1 error');
 
@@ -147,7 +146,6 @@ describe('File reporter', function() {
                 // Make sure appropriate error message is written to gulp log.
                 expect(logStub.calledOnce).to.be.true;
                 var logArgs = logStub.firstCall.args;
-                expect(logArgs).to.be.an.instanceof(Array)
                 expect(logArgs).to.have.length(1);
                 expect(logArgs[0]).to.contain('3 errors');
 

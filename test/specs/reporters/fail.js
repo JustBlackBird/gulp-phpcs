@@ -17,12 +17,12 @@ describe('Fail reporter', function() {
     it('should fail when PHPCS error defined', function(done) {
         reporter.on('error', function(error) {
             expect(error).to.be.an.instanceof(gutil.PluginError);
-            expect(error.message).to.match(/\/test\/bad_file\.php/);
+            expect(error.message).to.contain('/src/bad_file.php');
             done();
         });
 
         var fakeFile = new File({
-            path: '/test/bad_file.php'
+            path: '/src/bad_file.php'
         });
 
         fakeFile.phpcsReport = {
