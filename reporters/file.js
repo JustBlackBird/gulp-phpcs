@@ -54,7 +54,7 @@ module.exports = function(options) {
             // Write the error output to the defined file
             fs.writeFile(options.path, report, function(err) {
                 if (err) {
-                    stream.emit('error', new gutil.PluginError('gulp-phpcs', error));
+                    stream.emit('error', new gutil.PluginError('gulp-phpcs', err));
                     callback();
 
                     return;
