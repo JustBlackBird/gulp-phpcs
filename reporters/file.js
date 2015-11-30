@@ -41,10 +41,18 @@ module.exports = function(options) {
 
         // After we collected all errors, output them to the defined file.
         function(callback) {
-            var stream = this;
+            var stream = this,
+                report = output.trim();
+
+            // We don't need to write an empty file.
+            if (report.length === 0) {
+                callback();
+
+                return;
+            }
 
             // Write the error output to the defined file
-            fs.writeFile(options.path, output.trim(), function(err) {
+            fs.writeFile(options.path, report, function(err) {
                 if (err) {
                     stream.emit('error', new gutil.PluginError('gulp-phpcs', error));
                     callback();
