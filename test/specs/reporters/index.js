@@ -1,5 +1,5 @@
 var expect = require('chai').expect,
-    loader = require('../../reporters');
+    loader = require('../../../reporters');
 
 describe('Reporter loader', function() {
     it('should throw error for unknown reporter', function() {

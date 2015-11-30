@@ -1,7 +1,7 @@
 var expect = require('chai').expect,
     File = require('vinyl'),
     gutil = require('gulp-util'),
-    failReporter = require('../../reporters/fail');
+    failReporter = require('../../../reporters/fail');
 
 describe('Fail reporter', function() {
     var reporter = null;

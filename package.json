@@ -36,6 +36,6 @@
   },
   "scripts": {
     "jshint": "jshint index.js reporters",
-    "test": "mocha --recursive test"
+    "test": "mocha --recursive test/specs"
   }
 }

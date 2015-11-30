@@ -2,7 +2,7 @@ var expect = require('chai').expect,
     File = require('vinyl'),
     sinon = require('sinon'),
     gutil = require('gulp-util'),
-    logReporter = require('../../reporters/log');
+    logReporter = require('../../../reporters/log');
 
 describe('Log reporter', function() {
     var reporter = null,

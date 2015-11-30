@@ -6,7 +6,7 @@ var fs = require('fs'),
     sinon = require('sinon'),
     through = require('through2'),
     fileExists = require('file-exists'),
-    fileReporter = require('../../reporters/file');
+    fileReporter = require('../../../reporters/file');
 
 var blackHole = function(onStreamEnd) {
     return through.obj(function(file, enc, callback) {
