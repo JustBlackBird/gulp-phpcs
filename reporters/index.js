@@ -16,10 +16,21 @@ module.exports = function(name, options) {
         throw new gutil.PluginError('gulp-phpcs', 'Reporter name must be a string');
     }
 
-    var fileName = __dirname + '/' + name + '.js';
-    if (name === 'index' || !fs.existsSync(fileName)) {
+    if (name === 'index') {
+        throw new gutil.PluginError('gulp-phpcs', 'Reporter cannot be named "index"');
+    }
+
+    var fileName = __dirname + '/' + name + '.js',
+        reporter = null;
+    try {
+        reporter = require(fileName)(options || {});
+    } catch(error) {
+        if (error.code !== 'MODULE_NOT_FOUND') {
+            throw error;
+        }
+
         throw new gutil.PluginError('gulp-phpcs', 'There is no reporter "' + name + '"');
     }
 
-    return require(fileName)(options || {});
+    return reporter;
 };
