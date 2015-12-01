@@ -1,0 +1,9 @@
+# Ignore npm modules
+node_modules
+
+# Ignore tests
+test
+
+# Hidden files
+.travis.yml
+.gitignore
