@@ -26,14 +26,15 @@
     "pluralize": "^1.2.1"
   },
   "devDependencies": {
+    "chai": "^3.4.1",
+    "file-exists": "^1.0.0",
+    "is-windows": "^0.1.0",
     "jshint": "^2.6.3",
     "mocha": "^2.3.4",
-    "vinyl": "^1.1.0",
-    "chai": "^3.4.1",
-    "sinon": "^1.17.2",
     "mock-fs": "^3.5.0",
-    "file-exists": "^1.0.0",
-    "mock-require": "^1.2.1"
+    "mock-require": "^1.2.1",
+    "sinon": "^1.17.2",
+    "vinyl": "^1.1.0"
   },
   "scripts": {
     "jshint": "jshint index.js reporters",
