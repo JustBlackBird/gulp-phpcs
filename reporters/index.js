@@ -20,7 +20,7 @@ module.exports = function(name, options) {
         throw new gutil.PluginError('gulp-phpcs', 'Reporter cannot be named "index"');
     }
 
-    var fileName = __dirname + '/' + name + '.js',
+    var fileName = './' + name + '.js',
         reporter = null;
     try {
         reporter = require(fileName)(options || {});
