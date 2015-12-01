@@ -19,22 +19,15 @@ module.exports = function(options) {
         throw new gutil.PluginError('gulp-phpcs', 'You have to specify a path for the file reporter!');
     }
 
-    var errors = 0,
-        output = '';
+    var collectedErrors = [];
 
     return through.obj(
         function(file, enc, callback) {
             var report = file.phpcsReport || {};
 
-            // collect all errors
+            // Collect all errors.
             if (report.error) {
-                // increase error counter
-                errors++;
-
-                // add error to output
-                output += report.output +
-                    // Separate different outputs
-                    '\n\n\n';
+                collectedErrors.push(report.output);
             }
 
             this.push(file);
@@ -43,15 +36,16 @@ module.exports = function(options) {
 
         // After we collected all errors, output them to the defined file.
         function(callback) {
-            var stream = this,
-                report = output.trim();
+            var stream = this;
 
             // We don't need to write an empty file.
-            if (report.length === 0) {
+            if (collectedErrors.length === 0) {
                 callback();
 
                 return;
             }
+
+            var report = collectedErrors.join('\n\n\n').trim();
 
             // Write the error output to the defined file
             fs.writeFile(options.path, report, function(err) {
@@ -65,7 +59,7 @@ module.exports = function(options) {
                 // Build console info message
                 var message = util.format(
                     'Your report with %s got written to "%s"',
-                    chalk.red(pluralize('error', errors, true)),
+                    chalk.red(pluralize('error', collectedErrors.length, true)),
                     chalk.magenta(options.path)
                 );
 
