@@ -20,16 +20,16 @@
     "phpcs"
   ],
   "dependencies": {
-    "gulp-util": "^3.0.3",
-    "through2": "^0.6.3",
-    "chalk": "^0.5.1",
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0",
+    "chalk": "^1.1.1",
     "pluralize": "^1.2.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",
     "file-exists": "^1.0.0",
     "is-windows": "^0.1.0",
-    "jshint": "^2.6.3",
+    "jshint": "^2.9.1-rc1",
     "mocha": "^2.3.4",
     "mock-fs": "^3.5.0",
     "mock-require": "^1.2.1",
