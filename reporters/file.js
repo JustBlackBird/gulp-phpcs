@@ -45,7 +45,7 @@ module.exports = function(options) {
                 return;
             }
 
-            var report = collectedErrors.join('\n\n').trim();
+            var report = collectedErrors.join('\n\n').trim() + '\n';
 
             // Write the error output to the defined file
             fs.writeFile(options.path, report, function(err) {
