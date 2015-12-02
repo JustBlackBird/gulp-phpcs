@@ -45,7 +45,7 @@ module.exports = function(options) {
                 return;
             }
 
-            var report = collectedErrors.join('\n\n\n').trim();
+            var report = collectedErrors.join('\n\n').trim();
 
             // Write the error output to the defined file
             fs.writeFile(options.path, report, function(err) {
@@ -58,7 +58,7 @@ module.exports = function(options) {
 
                 // Build console info message
                 var message = util.format(
-                    'Your report with %s got written to "%s"',
+                    'Your PHPCS report with %s got written to "%s"',
                     chalk.red(pluralize('error', collectedErrors.length, true)),
                     chalk.magenta(options.path)
                 );
