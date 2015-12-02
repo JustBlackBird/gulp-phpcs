@@ -58,7 +58,7 @@ module.exports = function(options) {
 
                 // Build console info message
                 var message = util.format(
-                    'Your PHPCS report with %s got written to "%s"',
+                    'Your PHPCS report with %s got written to %s',
                     chalk.red(pluralize('error', collectedErrors.length, true)),
                     chalk.magenta(options.path)
                 );
