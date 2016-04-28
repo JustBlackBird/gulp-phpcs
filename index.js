@@ -44,6 +44,12 @@ var buildCommand = function(opts) {
         args.push('--colors');
     }
 
+    if (opts.hasOwnProperty('reports') && Array.isArray(opts.reports) && opts.reports.length !== 0) {
+        for (var report in opts.reports) {
+            args.push('--report-' + report + '=' + opts.reports[report] + '');
+        }
+    }
+
     return {
         bin: opts.bin || 'phpcs',
         args: args
