@@ -114,9 +114,9 @@ This option is equivalent to Code Sniffer `--colors` option.
 
 #### options.reports
 
-Type: `Array`
+Type: `Object`
 
-Generate reports in different formats with the results.
+Generate reports from the built-in PHPCS reporting mechanism.
 
 Supports all of the PHPCS report types.
 
