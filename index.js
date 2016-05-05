@@ -73,7 +73,8 @@ var resolveCommand = (function(){
             return callback(null, cache[bin]);
         }
 
-        which(bin, function(err, resolved) {
+        var normalizedBin = path.normalize(bin.replace(/[\\/]/g, path.sep));
+        which(normalizedBin, function(err, resolved) {
             if (err) {
                 if (err.code !== 'ENOENT') {
                     // Something is totally wrong. Let the outer code know.
@@ -86,8 +87,8 @@ var resolveCommand = (function(){
                 return callback(null, false);
             }
 
-            cache[bin] = path.normalize(resolved);
-            callback(null, cache[bin]);
+            cache[bin] = resolved;
+            callback(null, resolved);
         });
     };
 })();
