@@ -40,7 +40,7 @@ describe('Log reporter', function() {
         fakeFile.phpcsReport = {
             error: true,
             output: 'test PHPCS output'
-        }
+        };
 
         reporter.write(fakeFile);
     });
