@@ -1,16 +1,7 @@
 var expect = require('chai').expect,
     File = require('vinyl'),
-    isWindows = require('is-windows'),
     gutil = require('gulp-util'),
     phpcs = require('../../index.js');
-
-var buildCommand = function(cmd) {
-    if (isWindows()) {
-        return cmd.replace(/\//g, '\\') + '.cmd';
-    }
-
-    return cmd + '.sh';
-};
 
 // NOTICE: All path to commands are specified related to the root of the
 // project. This is because cwd is "../../" when the tests are run.
@@ -19,13 +10,13 @@ describe('PHPCS', function() {
     describe('CLI tool runner', function() {
         it('should fail if the CLI tool cannot be found', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/missed')
+                bin: './test/fixture/missed'
             });
 
             plugin.on('error', function(error) {
                 expect(error).to.be.an.instanceof(gutil.PluginError);
                 expect(error.message).to.contain('Cannot find');
-                expect(error.message).to.contain(buildCommand('./test/fixture/missed'));
+                expect(error.message).to.contain('./test/fixture/missed');
                 done();
             });
 
@@ -37,7 +28,7 @@ describe('PHPCS', function() {
 
         it('should ignore empty files', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/error')
+                bin: './test/fixture/error'
             });
 
             plugin.on('data', function(file) {
@@ -54,7 +45,7 @@ describe('PHPCS', function() {
 
         it('should do nothing if PHPCS exists with zero exit-code', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/zero')
+                bin: './test/fixture/zero'
             });
 
             plugin.on('data', function(file) {
@@ -72,7 +63,7 @@ describe('PHPCS', function() {
 
         it('should retrieve stdout "as is" for style errors', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/style_error')
+                bin: './test/fixture/style_error'
             });
 
             plugin.on('data', function(file) {
@@ -96,7 +87,7 @@ describe('PHPCS', function() {
 
         it('should retrieve error "as is"', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/error')
+                bin: './test/fixture/error'
             });
 
             plugin.on('error', function(error) {
@@ -131,7 +122,7 @@ describe('PHPCS', function() {
 
         it('should use none of options by default', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args')
+                bin: './test/fixture/args'
             });
 
             plugin.on('data', function(file) {
@@ -145,7 +136,7 @@ describe('PHPCS', function() {
 
         it('should use passed in "severity" option "as is"', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 severity: 0
             });
 
@@ -160,7 +151,7 @@ describe('PHPCS', function() {
 
         it('should use passed in "warningSeverity" option "as is"', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 warningSeverity: 1
             });
 
@@ -175,7 +166,7 @@ describe('PHPCS', function() {
 
         it('should use passed in "errorSeverity" option "as is"', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 errorSeverity: 2
             });
 
@@ -190,7 +181,7 @@ describe('PHPCS', function() {
 
         it('should use passed in "standard" option "as is"', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 standard: 'PSR2'
             });
 
@@ -205,7 +196,7 @@ describe('PHPCS', function() {
 
         it('should use passed in "encoding" option "as is"', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 encoding: 'utf8'
             });
 
@@ -220,7 +211,7 @@ describe('PHPCS', function() {
 
         it('should use "-s" flag if "showSniffCode" option is true', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 showSniffCode: true
             });
 
@@ -235,7 +226,7 @@ describe('PHPCS', function() {
 
         it('should not use "-s" flag if "showSniffCode" option is false', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 showSniffCode: false
             });
 
@@ -250,7 +241,7 @@ describe('PHPCS', function() {
 
         it('should use passed in "sniffs" option', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 sniffs: ['foo', 'bar', 'baz']
             });
 
@@ -270,7 +261,7 @@ describe('PHPCS', function() {
 
         it('should not use "--sniffs" option if an empty array is passed in', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 sniffs: []
             });
 
@@ -285,7 +276,7 @@ describe('PHPCS', function() {
 
         it('should not use "--sniffs" option if not an array is passed in', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 sniffs: 'test string'
             });
 
@@ -300,7 +291,7 @@ describe('PHPCS', function() {
 
         it('should use "--colors" flag if "colors" option is true', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 colors: true
             });
 
@@ -315,7 +306,7 @@ describe('PHPCS', function() {
 
         it('should not use "--colors" flag if "colors" option is false', function(done) {
             var plugin = phpcs({
-                bin: buildCommand('./test/fixture/args'),
+                bin: './test/fixture/args',
                 colors: false
             });
 

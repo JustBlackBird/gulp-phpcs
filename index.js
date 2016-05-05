@@ -1,6 +1,8 @@
 var util = require('util'),
+    path = require('path'),
     gutil = require('gulp-util'),
     through = require('through2'),
+    which = require('which'),
     spawn = require('child_process').spawn;
 
 /**
@@ -51,6 +53,46 @@ var buildCommand = function(opts) {
 };
 
 /**
+ * Resolves real path of the command.
+ *
+ * The results are cached inside of the function.
+ *
+ * @type Function
+ * @param {String} bin A command which should be resolved.
+ * @param {Function} callback A function which will be called onece the command
+ * is resolved or a error occurs. The error object (or null) is passed as the
+ * first argument. The real path of the command is passed as the second argument.
+ * If the command is not found the second argument is boolean false.
+ */
+var resolveCommand = (function(){
+    // Closure is used here to cache resolved commands.
+    var cache = {};
+
+    return function(bin, callback) {
+        if (cache.hasOwnProperty(bin)) {
+            return callback(null, cache[bin]);
+        }
+
+        which(bin, function(err, resolved) {
+            if (err) {
+                if (err.code !== 'ENOENT') {
+                    // Something is totally wrong. Let the outer code know.
+                    return callback(err);
+                }
+
+                // The command is just not found.
+                cache[bin] = false;
+
+                return callback(null, false);
+            }
+
+            cache[bin] = path.normalize(resolved);
+            callback(null, cache[bin]);
+        });
+    };
+})();
+
+/**
  * Runs Code Sniffer shell command.
  *
  * @param {String} bin Shell command (without arguments) that should be performed
@@ -62,61 +104,61 @@ var buildCommand = function(opts) {
  * only if there was no error during execution.
  */
 var runCodeSniffer = function(bin, args, file, callback) {
-    // A buffer for PHPCS stdout stream.
-    var stdout = '';
-    // child_process.spawn is used instead of child_process.exec because
-    // the later one mix child process creation errors with non-zero exit
-    // codes of the created process. Unfortunately, the only way to
-    // separate the two groups of errors is to use spawn with all its
-    // drawbacks instead of exec.
-    var phpcs = spawn(bin, args);
-
-    phpcs.on('error', function(error) {
-        var wrapperError = null;
-
-        // Low level error are not informative enough to users of the plugin.
-        // We wrapp some errors to make them usefull for non-developers.
-        switch(error.code) {
-            case 'ENOENT':
-                wrappedError = new Error(util.format('Cannot find "%s"', bin));
-                break;
-            default:
-                wrappedError = error;
-        }
-
-        if (error !== wrappedError) {
+    resolveCommand(bin, function(error, resolvedBin) {
+        if (error) {
+            // A real error occurs during command resolving. We can do nothing
+            // here, so just let the developer know.
+            var wrappedError = new Error(util.format(
+                'Cannot resolve real path of "%s"',
+                bin
+            ));
             wrappedError.originalError = error;
+
+            return callback(wrappedError);
         }
 
-        callback(wrappedError);
+        if (resolvedBin === false) {
+            // The bin is not found. Let the developer know about it.
+            return callback(new Error(util.format('Cannot find "%s"', bin)));
+        }
+
+        // A buffer for PHPCS stdout stream.
+        var stdout = '';
+        // child_process.spawn is used instead of child_process.exec because of
+        // its flexibility.
+        var phpcs = spawn(resolvedBin, args);
+
+        phpcs.on('error', function(error) {
+            callback(error);
+        });
+
+        phpcs.on('exit', function(code) {
+            callback(null, code, stdout);
+        });
+
+        phpcs.stdin.on('error', function(error) {
+            // Just ignore this event because an error (with more
+            // detailed description) should also be emitted at spawned
+            // process instance.
+        });
+
+        phpcs.stdout.on('data', function(data) {
+            // Just buffer data from stdout to use it later.
+            stdout += data.toString();
+        });
+
+        // Detect line endings like it's done in PHPCS
+        var matches = /\r\n?|\n/.exec(file.contents.toString()),
+            eol = matches ? matches[0] : '\n';
+
+        // Pass the file name to Code Sniffer. This is needed to
+        // get the correct error message from Code Sniffer.
+        phpcs.stdin.write('phpcs_input_file: ' + file.path + eol);
+
+        // Pass content of the file as STDIN to Code Sniffer
+        phpcs.stdin.write(file.contents);
+        phpcs.stdin.end();
     });
-
-    phpcs.on('exit', function(code) {
-        callback(null, code, stdout);
-    });
-
-    phpcs.stdin.on('error', function(error) {
-        // Just ignore this event because an error (with more
-        // detailed description) should also be emitted at spawned
-        // process instance.
-    });
-
-    phpcs.stdout.on('data', function(data) {
-        // Just buffer data from stdout to use it later.
-        stdout += data.toString();
-    });
-
-    // Detect line endings like it's done in PHPCS
-    var matches = /\r\n?|\n/.exec(file.contents.toString()),
-        eol = matches ? matches[0] : '\n';
-
-    // Pass the file name to Code Sniffer. This is needed to
-    // get the correct error message from Code Sniffer.
-    phpcs.stdin.write('phpcs_input_file: ' + file.path + eol);
-
-    // Pass content of the file as STDIN to Code Sniffer
-    phpcs.stdin.write(file.contents);
-    phpcs.stdin.end();
 };
 
 var phpcsPlugin = function(options) {
