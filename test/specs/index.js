@@ -1,14 +1,20 @@
-var expect = require('chai').expect,
+var path = require('path'),
+    expect = require('chai').expect,
     File = require('vinyl'),
     gutil = require('gulp-util'),
+    isWindows = require('is-windows'),
     phpcs = require('../../index.js');
 
 // NOTICE: All path to commands are specified related to the root of the
 // project. This is because cwd is "../../" when the tests are run.
 
+// Attach fixture path to PATH env so we could use just commands from fixture.
+var sep = isWindows() ? ';' : ':';
+process.env.PATH += sep + path.resolve('./test/fixture');
+
 describe('PHPCS', function() {
-    describe('CLI tool runner', function() {
-        it('should fail if the CLI tool cannot be found', function(done) {
+    describe('CLI command resolver', function() {
+        it('should fail if the CLI command cannot be found', function(done) {
             var plugin = phpcs({
                 bin: './test/fixture/missed'
             });
@@ -26,6 +32,88 @@ describe('PHPCS', function() {
             }));
         });
 
+        it('should find command by relative path with win slashes', function(done) {
+            var plugin = phpcs({
+                bin: '.\\test\\fixture\\zero'
+            });
+
+            plugin.on('error', function(error) {
+                // This should never happen.
+                done(error);
+            });
+
+            plugin.on('data', function() {
+                done();
+            });
+
+            plugin.write(new File({
+                path: '/src/bad_file.php',
+                contents: new Buffer('test')
+            }));
+        });
+
+        it('should find command by relative path with *nix slashes', function(done) {
+            var plugin = phpcs({
+                bin: './test/fixture/zero'
+            });
+
+            plugin.on('error', function(error) {
+                // This should never happen.
+                done(error);
+            });
+
+            plugin.on('data', function() {
+                done();
+            });
+
+            plugin.write(new File({
+                path: '/src/bad_file.php',
+                contents: new Buffer('test')
+            }));
+        });
+
+        it('should find command by relative path without leading dot', function(done) {
+            var plugin = phpcs({
+                bin: 'test/fixture/zero'
+            });
+
+            plugin.on('error', function(error) {
+                // This should never happen.
+                done(error);
+            });
+
+            plugin.on('data', function() {
+                done();
+            });
+
+            plugin.write(new File({
+                path: '/src/bad_file.php',
+                contents: new Buffer('test')
+            }));
+        });
+
+        it('should find command in PATH env by its name', function(done) {
+            var plugin = phpcs({
+                bin: 'zero'
+            });
+
+            plugin.on('error', function(error) {
+                // This should never happen.
+                done(error);
+            });
+
+            plugin.on('data', function() {
+                done();
+            });
+
+            plugin.write(new File({
+                path: '/src/bad_file.php',
+                contents: new Buffer('test')
+            }));
+        });
+    });
+
+    describe('CLI tool runner', function() {
         it('should ignore empty files', function(done) {
             var plugin = phpcs({
                 bin: './test/fixture/error'
