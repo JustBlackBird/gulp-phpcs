@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Fix `which` package dependency.
+
 ## 1.1.0
 
 - Resolve real bin path (just like unix `which` does).
