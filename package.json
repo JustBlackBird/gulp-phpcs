@@ -23,7 +23,8 @@
     "gulp-util": "^3.0.7",
     "through2": "^2.0.0",
     "chalk": "^1.1.1",
-    "pluralize": "^1.2.1"
+    "pluralize": "^1.2.1",
+    "which": "^1.2.7"
   },
   "devDependencies": {
     "chai": "^3.4.1",
@@ -34,8 +35,7 @@
     "mock-fs": "^3.5.0",
     "mock-require": "^1.2.1",
     "sinon": "^1.17.2",
-    "vinyl": "^1.1.0",
-    "which": "^1.2.7"
+    "vinyl": "^1.1.0"
   },
   "scripts": {
     "jshint": "jshint index.js reporters",
