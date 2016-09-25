@@ -32,7 +32,7 @@
     "file-exists": "^1.0.0",
     "jshint": "^2.9.1-rc1",
     "mocha": "^2.3.4",
-    "mock-fs": "^3.5.0",
+    "mock-fs": "^3.11.0",
     "mock-require": "^1.2.1",
     "sinon": "^1.17.2",
     "vinyl": "^1.1.0"
