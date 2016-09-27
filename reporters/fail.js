@@ -11,20 +11,27 @@ var gutil = require('gulp-util'),
  * @returns {Function}
  */
 module.exports = function() {
-    return through.obj(function(file, enc, callback) {
-        var report = file.phpcsReport || {};
+    var phpcsError = false;
 
-        if (report.error) {
-            var errorMessage = 'PHP Code Sniffer failed' +
-                ' on ' + chalk.magenta(file.path);
+    return through.obj(
+        // Watch for errors
+        function(file, enc, callback) {
+            var report = file.phpcsReport || {};
 
-            this.emit('error', new gutil.PluginError('gulp-phpcs', errorMessage));
+            if (report.error) {
+                phpcsError = true;
+            }
+
+            this.push(file);
             callback();
+        },
 
-            return;
-        }
+        // Abort if we had at leaste one error
+        function(callback) {
+            if (phpcsError) {
+                this.emit('error', new gutil.PluginError('gulp-phpcs', 'PHP Code Sniffer failed at at leaste one file.'));
+            }
 
-        this.push(file);
-        callback();
-    });
+            callback();
+        });
 };
