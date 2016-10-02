@@ -138,8 +138,11 @@ any other plugins.
 
 These reporters are shipped with the plugin:
 
-1. Fail reporter - fails if a problem was found. Use `phpcs.reporter('fail')`
-to load it.
+1. Fail reporter - fails if a problem was found. Use
+`phpcs.reporter('fail', {failOnFirst: true})` to load it. `failOnFirst` option
+is used to choose when the reporter should fail on the first errored file or at
+the end of the file stream. This option can be omitted (`true` is used by
+default).
 
 2. Log reporter - outputs all problems to the console. Use
 `phpcs.reporter('log')` to load it.
