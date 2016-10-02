@@ -14,10 +14,31 @@ describe('Fail reporter', function() {
         reporter = null;
     });
 
-    it('should fail when PHPCS error defined', function(done) {
+    it('should fail immediately when PHPCS error defined', function(done) {
         reporter.on('error', function(error) {
             expect(error).to.be.an.instanceof(gutil.PluginError);
             expect(error.message).to.contain('/src/bad_file.php');
+            done();
+        });
+
+        var fakeFile = new File({
+            path: '/src/bad_file.php'
+        });
+
+        fakeFile.phpcsReport = {
+            error: true,
+            output: 'test error'
+        };
+
+        reporter.write(fakeFile);
+    });
+
+    it('should fail at the end of the stream when PHPCS error defined', function(done) {
+        var reporter = failReporter({ failOnFirst: true });
+
+        reporter.on('error', function(error) {
+            expect(error).to.be.an.instanceof(gutil.PluginError);
+            expect(error.message).to.contain('PHP Code Sniffer failed');
             done();
         });
 
