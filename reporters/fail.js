@@ -11,11 +11,13 @@ var gutil = require('gulp-util'),
  * @returns {Function}
  */
 module.exports = function(options) {
-    // set failOnFirst true by default
-    options = options || {};
-    options.failOnFirst = options.failOnFirst || true;
-
     var phpcsError = false;
+
+    // Set failOnFirst true by default
+    options = options || {};
+    if (!options.hasOwnProperty('failOnFirst')) {
+        options.failOnFirst = true;
+    }
 
     return through.obj(
         // Watch for errors
@@ -40,11 +42,13 @@ module.exports = function(options) {
             callback();
         },
 
-        // Abort if we had at leaste one error
+        // Abort if we had at least one error.
         function(callback) {
-            if (phpcsError) {
+            // We have to check "failOnFirst" flag to make sure we did not
+            // throw the error before.
+            if (phpcsError && !options.failOnFirst) {
                 this.emit('error', new gutil.PluginError('gulp-phpcs', 'PHP Code Sniffer' +
-                    ' failed at at leaste one file.'));
+                    ' failed at least at one file.'));
             }
 
             callback();
