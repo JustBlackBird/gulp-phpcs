@@ -385,7 +385,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                var excludeArgs = /--exclude=([^\s]+)/.exec(output);
+                var excludeArgs = /^--exclude=([^\s]+)$/.exec(output);
                 expect(excludeArgs).to.be.not.null;
                 expect(excludeArgs[1].split(',')).to.have.members(['foo', 'bar', 'baz']);
 
@@ -403,7 +403,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.not.match(/--exclude/);
+                expect(output).to.be.equal('');
                 done();
             });
 
@@ -418,7 +418,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.not.match(/--exclude/);
+                expect(output).to.be.equal('');
                 done();
             });
 
