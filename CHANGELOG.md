@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+- Add "failOnFirst" option to Fail reporter.
+- Add "exclude" option.
+
 ## 1.1.1
 
 - Fix `which` package dependency.
