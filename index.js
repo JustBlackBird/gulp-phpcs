@@ -15,7 +15,7 @@ var buildCommand = function(opts) {
     var args = [];
 
     if (opts.hasOwnProperty('standard')) {
-        args.push('--standard=' + opts.standard + '');
+        args.push('--standard=' + opts.standard);
     }
 
     if (opts.hasOwnProperty('severity')) {
@@ -31,15 +31,18 @@ var buildCommand = function(opts) {
     }
 
     if (opts.hasOwnProperty('encoding')) {
-        args.push('--encoding=' + opts.encoding + '');
+        args.push('--encoding=' + opts.encoding);
     }
 
     if (opts.hasOwnProperty('showSniffCode') && opts.showSniffCode) {
         args.push('-s');
     }
 
-    if (opts.hasOwnProperty('sniffs') && Array.isArray(opts.sniffs) && opts.sniffs.length !== 0) {
-        args.push('--sniffs=' + opts.sniffs.join(',') + '');
+    var useSniffs = opts.hasOwnProperty('sniffs') &&
+        Array.isArray(opts.sniffs) &&
+        opts.sniffs.length !== 0;
+    if (useSniffs) {
+        args.push('--sniffs=' + opts.sniffs.join(','));
     }
 
     var useExclude = opts.hasOwnProperty('exclude') &&
