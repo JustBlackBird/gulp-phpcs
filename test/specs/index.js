@@ -377,6 +377,54 @@ describe('PHPCS', function() {
             plugin.write(fakeFile);
         });
 
+        it('should use passed in "exclude" option', function(done) {
+            var plugin = phpcs({
+                bin: './test/fixture/args',
+                exclude: ['foo', 'bar', 'baz']
+            });
+
+            plugin.on('data', function(file) {
+                var output = file.phpcsReport.output.trim();
+                var excludeArgs = /--exclude=([^\s]+)/.exec(output);
+                expect(excludeArgs).to.be.not.null;
+                expect(excludeArgs[1].split(',')).to.have.members(['foo', 'bar', 'baz']);
+
+                done();
+            });
+
+            plugin.write(fakeFile);
+        });
+
+        it('should not use "--exclude" option if an empty array is passed in', function(done) {
+            var plugin = phpcs({
+                bin: './test/fixture/args',
+                exclude: []
+            });
+
+            plugin.on('data', function(file) {
+                var output = file.phpcsReport.output.trim();
+                expect(output).to.not.match(/--exclude/);
+                done();
+            });
+
+            plugin.write(fakeFile);
+        });
+
+        it('should not use "--exclude" option if not an array is passed in', function(done) {
+            var plugin = phpcs({
+                bin: './test/fixture/args',
+                exclude: 'test string'
+            });
+
+            plugin.on('data', function(file) {
+                var output = file.phpcsReport.output.trim();
+                expect(output).to.not.match(/--exclude/);
+                done();
+            });
+
+            plugin.write(fakeFile);
+        });
+
         it('should use "--colors" flag if "colors" option is true', function(done) {
             var plugin = phpcs({
                 bin: './test/fixture/args',

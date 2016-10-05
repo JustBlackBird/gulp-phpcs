@@ -102,6 +102,14 @@ Filter for executed Sniffs
 
 This option is equivalent to Code Sniffer `--sniffs` option.
 
+#### options.exclude
+
+Type: `Array`
+
+Exclude some sniffs from ruleset.
+
+This option is equivalent to Code Sniffer `--exclude` option.
+
 #### options.colors
 
 Type: `Boolean`
