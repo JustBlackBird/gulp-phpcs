@@ -143,7 +143,7 @@ var runCodeSniffer = function(bin, args, file, callback) {
             callback(error);
         });
 
-        phpcs.on('exit', function(code) {
+        phpcs.on('close', function(code) {
             callback(null, code, stdout);
         });
 
