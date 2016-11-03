@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- Use "close" event instead of "exit" event on child PHPCS process.
+
 ## 1.2.0
 
 - Add "failOnFirst" option to Fail reporter.
