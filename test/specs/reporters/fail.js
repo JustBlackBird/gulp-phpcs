@@ -99,7 +99,7 @@ describe('Fail reporter', function() {
 
         reporter.on('error', function(error) {
             expect(error).to.be.an.instanceof(gutil.PluginError);
-            expect(error.message).to.contain('at least at one');
+            expect(error.message).to.contain('/src/bad_file.php');
             // All the files must pass through the pipe.
             expect(spy.filesCount).to.equal(2);
             done();
@@ -120,6 +120,43 @@ describe('Fail reporter', function() {
 
         reporter.write(fakeBadFile);
         reporter.write(fakeGoodFile);
+        reporter.end();
+    });
+
+    it('should list all the bad files with failOnFirst = false', function(done) {
+        var reporter = failReporter({failOnFirst: false}),
+            spy = filesCounterSpy();
+
+        reporter.pipe(spy);
+
+        reporter.on('error', function(error) {
+            expect(error).to.be.an.instanceof(gutil.PluginError);
+            expect(error.message).to.contain('/src/bad_file.php');
+            expect(error.message).to.contain('/src/another_bad_file.php');
+            expect(spy.filesCount).to.equal(2);
+            done();
+        });
+
+        var fakeBadFile = new File({
+            path: '/src/bad_file.php'
+        });
+
+        fakeBadFile.phpcsReport = {
+            error: true,
+            output: 'test error'
+        };
+
+        var anotherFakeBadFile = new File({
+            path: '/src/another_bad_file.php'
+        });
+
+        anotherFakeBadFile.phpcsReport = {
+            error: true,
+            output: 'test error'
+        };
+
+        reporter.write(fakeBadFile);
+        reporter.write(anotherFakeBadFile);
         reporter.end();
     });
 

@@ -12,6 +12,7 @@ var gutil = require('gulp-util'),
  */
 module.exports = function(options) {
     var phpcsError = false;
+    var badFiles = [];
 
     // Set failOnFirst true by default
     options = options || {};
@@ -35,6 +36,8 @@ module.exports = function(options) {
                     callback();
 
                     return;
+                }  else {
+                    badFiles.push(chalk.magenta(file.path));
                 }
             }
 
@@ -47,8 +50,10 @@ module.exports = function(options) {
             // We have to check "failOnFirst" flag to make sure we did not
             // throw the error before.
             if (phpcsError && !options.failOnFirst) {
-                this.emit('error', new gutil.PluginError('gulp-phpcs', 'PHP Code Sniffer' +
-                    ' failed at least at one file.'));
+                this.emit('error', new gutil.PluginError(
+                    'gulp-phpcs',
+                    'PHP Code Sniffer failed on \n    ' + badFiles.join('\n    ')
+                ));
             }
 
             callback();
