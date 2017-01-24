@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+- Make "Fail" reporter log all the bad file names when `failOnFirst = false`
+
 ## 1.3.0
 
 - Use "close" event instead of "exit" event on child PHPCS process.
