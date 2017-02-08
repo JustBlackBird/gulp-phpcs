@@ -120,6 +120,21 @@ This option is equivalent to Code Sniffer `--colors` option.
 
 **Warning**: This options is only compatible with 2.x branch of Code Sniffer.
 
+#### options.reports
+
+Type: `Object`
+
+Generate reports from the built-in PHPCS reporting mechanism.
+
+Supports all of the PHPCS report types.
+
+```
+reports: [
+	'checkstyle': '/path/to/report/checkstyle-output.xml',
+	'gitblame': '/path/to/report/gitblame-output.txt'
+]
+```
+
 ### phpcs.reporter(name[, options])
 
 Loads one of the reporters that shipped with the plugin (see below).
