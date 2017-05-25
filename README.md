@@ -5,7 +5,7 @@
 
 ## Install
 
-1. Choose correct version of gulp-phpcs. One should use gulp-phpcs@1.x for PHPCS 2.x and gulp-phpcs@2.x with PHPCS 3.x.
+1. Choose correct version of gulp-phpcs. One should use `gulp-phpcs@1.x` for PHPCS 2.x and `gulp-phpcs@2.x` with PHPCS 3.x.
 
 2. Install the plugin with the following command:
 
