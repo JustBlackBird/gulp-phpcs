@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Resend stdin to stdout.
+cat
+# PHPCS uses exit-code = 1 to report about fixable style problems.
+exit 1
