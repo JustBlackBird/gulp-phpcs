@@ -56,6 +56,9 @@ var buildCommand = function(opts) {
         args.push('--colors');
     }
 
+    // Finally specify the file is streamed on stdin.
+    args.push('-');
+
     return {
         bin: opts.bin || 'phpcs',
         args: args
@@ -202,8 +205,8 @@ var phpcsPlugin = function(options) {
                 return;
             }
 
-            if (exitCode > 1) {
-                // On codding style problems Code Sniffer should exists with "1" code.
+            if (exitCode > 2) {
+                // On codding style problems Code Sniffer should exists with "1" or "2" code.
                 // All other non-zero exit codes should be treated as Code Sniffer errors.
                 var phpcsError = new gutil.PluginError('gulp-phpcs', 'Execution of Code Sniffer Failed');
                 phpcsError.stdout = output;
@@ -218,7 +221,7 @@ var phpcsPlugin = function(options) {
                 output: ''
             };
 
-            if (exitCode === 1) {
+            if ((exitCode === 1) || (exitCode === 2)) {
                 // A codding style problem is found. Attache report to the file to allow
                 // reporters do their job.
                 report.error = true;

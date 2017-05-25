@@ -215,7 +215,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('');
+                expect(output).to.be.equal('-');
                 done();
             });
 
@@ -230,7 +230,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('--severity=0');
+                expect(output).to.be.equal('--severity=0 -');
                 done();
             });
 
@@ -245,7 +245,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('--warning-severity=1');
+                expect(output).to.be.equal('--warning-severity=1 -');
                 done();
             });
 
@@ -260,7 +260,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('--error-severity=2');
+                expect(output).to.be.equal('--error-severity=2 -');
                 done();
             });
 
@@ -275,7 +275,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('--standard=PSR2');
+                expect(output).to.be.equal('--standard=PSR2 -');
                 done();
             });
 
@@ -290,7 +290,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('--encoding=utf8');
+                expect(output).to.be.equal('--encoding=utf8 -');
                 done();
             });
 
@@ -305,7 +305,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('-s');
+                expect(output).to.be.equal('-s -');
                 done();
             });
 
@@ -320,7 +320,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('');
+                expect(output).to.be.equal('-');
                 done();
             });
 
@@ -336,10 +336,10 @@ describe('PHPCS', function() {
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
                 // Validate the option.
-                expect(output).to.match(/^--sniffs=/);
+                expect(output).to.match(/^--sniffs=([^\s]+) -$/);
                 // Validate used sniffs.
-                var usedSniffs = output.split('=')[1].split(',');
-                expect(usedSniffs).to.have.members(['foo', 'bar', 'baz']);
+                var usedSniffs = /^--sniffs=([^\s]+) -$/.exec(output);
+                expect(usedSniffs[1].split(',')).to.have.members(['foo', 'bar', 'baz']);
 
                 done();
             });
@@ -355,7 +355,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('');
+                expect(output).to.be.equal('-');
                 done();
             });
 
@@ -370,7 +370,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('');
+                expect(output).to.be.equal('-');
                 done();
             });
 
@@ -385,7 +385,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                var excludeArgs = /^--exclude=([^\s]+)$/.exec(output);
+                var excludeArgs = /^--exclude=([^\s]+) -$/.exec(output);
                 expect(excludeArgs).to.be.not.null;
                 expect(excludeArgs[1].split(',')).to.have.members(['foo', 'bar', 'baz']);
 
@@ -403,7 +403,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('');
+                expect(output).to.be.equal('-');
                 done();
             });
 
@@ -418,7 +418,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('');
+                expect(output).to.be.equal('-');
                 done();
             });
 
@@ -433,7 +433,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('--colors');
+                expect(output).to.be.equal('--colors -');
                 done();
             });
 
@@ -448,7 +448,7 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.be.equal('');
+                expect(output).to.be.equal('-');
                 done();
             });
 
