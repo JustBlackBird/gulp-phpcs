@@ -5,13 +5,15 @@
 
 ## Install
 
-1. Install the plugin with the following command:
+1. Choose correct version of gulp-phpcs. One should use gulp-phpcs@1.x for PHPCS 2.x and gulp-phpcs@2.x with PHPCS 3.x.
+
+2. Install the plugin with the following command:
 
 	```shell
 	npm install gulp-phpcs --save-dev
 	```
 
-2. [Install PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer#installation)
+3. [Install PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer#installation)
 
 
 ## Usage
