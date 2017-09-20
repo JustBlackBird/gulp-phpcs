@@ -34,6 +34,10 @@ var buildCommand = function(opts) {
         args.push('--encoding=' + opts.encoding);
     }
 
+    if (opts.hasOwnProperty('report')) {
+        args.push('--report=' + opts.report);
+    }
+
     if (opts.hasOwnProperty('showSniffCode') && opts.showSniffCode) {
         args.push('-s');
     }

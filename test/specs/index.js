@@ -321,6 +321,21 @@ describe('PHPCS', function() {
             plugin.write(fakeFile);
         });
 
+        it('should use passed in "report" option "as is"', function(done) {
+            var plugin = phpcs({
+                bin: './test/fixture/args',
+                report: 'summary'
+            });
+
+            plugin.on('data', function(file) {
+                var output = file.phpcsReport.output.trim();
+                expect(output).to.contain('--report=summary');
+                done();
+            });
+
+            plugin.write(fakeFile);
+        });
+
         it('should use "-s" flag if "showSniffCode" option is true', function(done) {
             var plugin = phpcs({
                 bin: './test/fixture/args',

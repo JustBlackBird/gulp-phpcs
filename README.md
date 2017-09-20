@@ -88,6 +88,14 @@ The encoding of the files being checked.
 
 This option is equivalent to Code Sniffer `--encoding="<encoding>"` option.
 
+#### options.report
+
+Type: `String`
+
+The report type to generate.
+
+This option is equivalent to Code Sniffer `--report="<report>"` option.
+
 #### options.showSniffCode
 
 Type: `Boolean`
