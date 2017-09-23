@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- Add `--report` option.
+
 ## 2.0.0
 
 - Make the plugin compatible with PHPCS 3.x. Since PHPCS breaks backward compatibity, `gulp-phpcs@2.0.0` **is not compatible** with PHPCS 2.x.
