@@ -56,6 +56,13 @@ var buildCommand = function(opts) {
         args.push('--exclude=' + opts.exclude.join(','));
     }
 
+    var useIgnore = opts.hasOwnProperty('ignore') &&
+        Array.isArray(opts.ignore) &&
+        opts.ignore.length !== 0;
+    if (useIgnore) {
+        args.push('--ignore=' + opts.ignore.join(','));
+    }
+
     if (opts.hasOwnProperty('colors') && opts.colors) {
         args.push('--colors');
     }
