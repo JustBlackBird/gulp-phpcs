@@ -120,6 +120,14 @@ Exclude some sniffs from ruleset.
 
 This option is equivalent to Code Sniffer `--exclude` option.
 
+#### options.ignore
+
+Type: `Array`
+
+Ignore a list of paths
+
+This option is equivalent to Code Sniffer `--ignore` option.
+
 #### options.colors
 
 Type: `Boolean`

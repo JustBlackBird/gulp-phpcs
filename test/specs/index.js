@@ -434,6 +434,26 @@ describe('PHPCS', function() {
             plugin.write(fakeFile);
         });
 
+        it('should use passed in "ignore" option', function(done) {
+          var paths = ['foo', 'bar', 'baz'];
+
+          var plugin = phpcs({
+              bin: './test/fixture/args',
+              ignore: paths
+          });
+
+          plugin.on('data', function(file) {
+              var output = file.phpcsReport.output.trim();
+              var ignoreArgs = /--ignore=([^\s]+)/.exec(output);
+              expect(ignoreArgs).to.be.not.null;
+              expect(ignoreArgs[1].split(',')).to.have.members(paths);
+
+              done();
+          });
+
+          plugin.write(fakeFile);
+      });
+
         it('should not use "--exclude" option if an empty array is passed in', function(done) {
             var plugin = phpcs({
                 bin: './test/fixture/args',
