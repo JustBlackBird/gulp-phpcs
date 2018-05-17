@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- Add `--ignore` option.
+
 ## 2.1.0
 
 - Add `--report` option.
