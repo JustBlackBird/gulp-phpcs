@@ -56,6 +56,13 @@ var buildCommand = function(opts) {
         args.push('--exclude=' + opts.exclude.join(','));
     }
 
+    var useIgnore = opts.hasOwnProperty('ignore') &&
+        Array.isArray(opts.ignore) &&
+        opts.ignore.length !== 0;
+    if (useIgnore) {
+        args.push('--ignore=' + opts.ignore.join(','));
+    }
+
     if (opts.hasOwnProperty('colors') && opts.colors) {
         args.push('--colors');
     }
@@ -76,7 +83,7 @@ var buildCommand = function(opts) {
  *
  * @type Function
  * @param {String} bin A command which should be resolved.
- * @param {Function} callback A function which will be called onece the command
+ * @param {Function} callback A function which will be called once the command
  * is resolved or a error occurs. The error object (or null) is passed as the
  * first argument. The real path of the command is passed as the second argument.
  * If the command is not found the second argument is boolean false.
@@ -117,7 +124,7 @@ var resolveCommand = (function(){
  * @param {Array} args List of arguments that should be passed to the Shell command.
  * @param {Object} file A file from Gulp pipeline that should be sniffed.
  * @param {Function} callback A function which will be called when Code Sniffer is
- * done or an error occurs. It will recieve three arguments: error instance, exit
+ * done or an error occurs. It will receive three arguments: error instance, exit
  * code and output of the Code Sniffer. The last two arguments will be passed in
  * only if there was no error during execution.
  */
@@ -226,7 +233,8 @@ var phpcsPlugin = function(options) {
             };
 
             if ((exitCode === 1) || (exitCode === 2)) {
-                // A codding style problem is found. Attache report to the file to allow
+                // A coding style problem is found.
+                // Attach report to the file to allow
                 // reporters do their job.
                 report.error = true;
                 report.output = output;
