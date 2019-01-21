@@ -76,7 +76,7 @@ This option is equivalent to Code Sniffer `--error-severity=<severity>` option.
 
 Type: `String`
 
-The name or path of the coding standard to use.
+The name or path of the coding standard to use. One can use this option to specify custom `phpcs.xml` file.
 
 This option is equivalent to Code Sniffer `--standard="<standard>"` option.
 
