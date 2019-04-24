@@ -114,7 +114,7 @@ describe('File reporter', function() {
             reporter.end();
         });
 
-        it('should write nothing if a file has no style problems', function() {
+        it('should write nothing if a file has no style problems', function(done) {
             var reporter = fileReporter({path: '/reports/errors.log'});
 
             reporter.pipe(blackHole(function() {
