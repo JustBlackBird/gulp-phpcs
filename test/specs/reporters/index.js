@@ -39,7 +39,7 @@ describe('Reporter loader', function() {
             reporterBuilder.reset();
         });
 
-	after(function() {
+    after(function() {
             mockRequire.stopAll();
         });
 

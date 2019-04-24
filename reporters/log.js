@@ -1,4 +1,4 @@
-var gutil = require('gulp-util'),
+var log = require('fancy-log'),
     through = require('through2'),
     chalk = require('chalk');
 
@@ -18,7 +18,7 @@ module.exports = function() {
             var message = 'PHP Code Sniffer found a ' + chalk.yellow('problem') +
                 ' in ' + chalk.magenta(file.path) + '\n' +
                 report.output.replace(/\n/g, '\n    ');
-            gutil.log(message);
+            log.info(message);
         }
 
         this.push(file);

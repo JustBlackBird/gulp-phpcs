@@ -1,7 +1,7 @@
 var path = require('path'),
     expect = require('chai').expect,
     File = require('vinyl'),
-    gutil = require('gulp-util'),
+    PluginError = require('plugin-error'),
     isWindows = require('is-windows'),
     phpcs = require('../../index.js');
 
@@ -20,7 +20,7 @@ describe('PHPCS', function() {
             });
 
             plugin.on('error', function(error) {
-                expect(error).to.be.an.instanceof(gutil.PluginError);
+                expect(error).to.be.an.instanceof(PluginError);
                 expect(error.message).to.contain('Cannot find');
                 expect(error.message).to.contain('./test/fixture/missed');
                 done();
@@ -203,7 +203,7 @@ describe('PHPCS', function() {
             });
 
             plugin.on('error', function(error) {
-                expect(error).to.be.an.instanceof(gutil.PluginError);
+                expect(error).to.be.an.instanceof(PluginError);
                 expect(error.message).to.be.equal('Execution of Code Sniffer Failed');
                 expect(error).to.have.property('stdout');
                 expect(error.stdout).to.contain('This is a test error.');

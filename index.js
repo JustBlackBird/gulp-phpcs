@@ -1,6 +1,6 @@
 var util = require('util'),
     path = require('path'),
-    gutil = require('gulp-util'),
+    PluginError = require('plugin-error'),
     through = require('through2'),
     which = require('which'),
     spawn = require('child_process').spawn;
@@ -200,7 +200,7 @@ var phpcsPlugin = function(options) {
         }
 
         if (file.isStream()) {
-            stream.emit('error', new gutil.PluginError('gulp-phpcs', 'Streams are not supported'));
+            stream.emit('error', new PluginError('gulp-phpcs', 'Streams are not supported'));
             callback();
 
             return;
@@ -210,7 +210,7 @@ var phpcsPlugin = function(options) {
             if (runError) {
                 // Something is totally wrong. It seems that execution of Code Sniffer
                 // failed (not because of non-zero exit code of PHPCS).
-                stream.emit('error', new gutil.PluginError('gulp-phpcs', runError));
+                stream.emit('error', new PluginError('gulp-phpcs', runError));
                 callback();
 
                 return;
@@ -219,7 +219,7 @@ var phpcsPlugin = function(options) {
             if (exitCode > 2) {
                 // On codding style problems Code Sniffer should exists with "1" or "2" code.
                 // All other non-zero exit codes should be treated as Code Sniffer errors.
-                var phpcsError = new gutil.PluginError('gulp-phpcs', 'Execution of Code Sniffer Failed');
+                var phpcsError = new PluginError('gulp-phpcs', 'Execution of Code Sniffer Failed');
                 phpcsError.stdout = output;
                 stream.emit('error', phpcsError);
                 callback();
