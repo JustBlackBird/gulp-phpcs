@@ -1,5 +1,6 @@
 var fs = require('fs'),
-    gutil = require('gulp-util'),
+    PluginError = require('plugin-error'),
+    log = require('fancy-log'),
     mockFs = require('mock-fs'),
     expect = require('chai').expect,
     File = require('vinyl'),
@@ -63,15 +64,14 @@ describe('File reporter', function() {
             // Actually we have to replace gutil.log with a stub because its
             // current implementation uses "require" at run-time which will
             // fail after file system is mocked.
-            logStub = sinon.stub(gutil, 'log');
+            logStub = sinon.stub(log, 'info');
         });
 
         afterEach(function() {
             // Restore all mocks that are in use.
             mockFs.restore();
-            gutil.log.restore();
             // Clean up created instances.
-            logStub = null;
+            logStub.restore();
         });
 
         it('should write report for files with style problem', function(done) {
@@ -114,7 +114,7 @@ describe('File reporter', function() {
             reporter.end();
         });
 
-        it('should write nothing if a file has no style problems', function() {
+        it('should write nothing if a file has no style problems', function(done) {
             var reporter = fileReporter({path: '/reports/errors.log'});
 
             reporter.pipe(blackHole(function() {
@@ -164,7 +164,7 @@ describe('File reporter', function() {
             var reporter = fileReporter({path: '/reports/locked.log'});
 
             reporter.on('error', function(error) {
-                expect(error).to.be.an.instanceof(gutil.PluginError);
+                expect(error).to.be.an.instanceof(PluginError);
                 done();
             });
 

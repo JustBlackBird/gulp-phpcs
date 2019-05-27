@@ -1,6 +1,6 @@
 var expect = require('chai').expect,
     File = require('vinyl'),
-    gutil = require('gulp-util'),
+    PluginError = require('plugin-error'),
     failReporter = require('../../../reporters/fail'),
     through = require('through2');
 
@@ -34,7 +34,7 @@ describe('Fail reporter', function() {
         reporter.pipe(spy);
 
         reporter.on('error', function(error) {
-            expect(error).to.be.an.instanceof(gutil.PluginError);
+            expect(error).to.be.an.instanceof(PluginError);
             expect(error.message).to.contain('/src/bad_file.php');
             // Nothing should came through the stream.
             expect(spy.filesCount).to.equal(0);
@@ -66,7 +66,7 @@ describe('Fail reporter', function() {
         reporter.pipe(spy);
 
         reporter.on('error', function(error) {
-            expect(error).to.be.an.instanceof(gutil.PluginError);
+            expect(error).to.be.an.instanceof(PluginError);
             expect(error.message).to.contain('/src/bad_file.php');
             // Nothing should came through the stream.
             expect(spy.filesCount).to.equal(0);
@@ -98,7 +98,7 @@ describe('Fail reporter', function() {
         reporter.pipe(spy);
 
         reporter.on('error', function(error) {
-            expect(error).to.be.an.instanceof(gutil.PluginError);
+            expect(error).to.be.an.instanceof(PluginError);
             expect(error.message).to.contain('/src/bad_file.php');
             // All the files must pass through the pipe.
             expect(spy.filesCount).to.equal(2);
@@ -130,7 +130,7 @@ describe('Fail reporter', function() {
         reporter.pipe(spy);
 
         reporter.on('error', function(error) {
-            expect(error).to.be.an.instanceof(gutil.PluginError);
+            expect(error).to.be.an.instanceof(PluginError);
             expect(error.message).to.contain('/src/bad_file.php');
             expect(error.message).to.contain('/src/another_bad_file.php');
             expect(spy.filesCount).to.equal(2);

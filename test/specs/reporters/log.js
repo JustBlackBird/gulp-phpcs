@@ -1,21 +1,21 @@
 var expect = require('chai').expect,
     File = require('vinyl'),
     sinon = require('sinon'),
-    gutil = require('gulp-util'),
+    log = require('fancy-log'),
     logReporter = require('../../../reporters/log');
 
 describe('Log reporter', function() {
-    var reporter = null,
+    var reporter = null;
         logStub = null;
 
     beforeEach(function() {
         reporter = logReporter();
-        logStub = sinon.stub(gutil, 'log');
+        logStub = sinon.stub(log, 'info');
     });
 
     afterEach(function() {
         reporter = null;
-        gutil.log.restore();
+        logStub.restore();
     });
 
     it('should print PHPCS report for file with problems', function(done) {

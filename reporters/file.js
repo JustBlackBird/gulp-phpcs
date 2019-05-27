@@ -1,6 +1,7 @@
 var fs = require('fs'),
     util = require('util'),
-    gutil = require('gulp-util'),
+    PluginError = require('plugin-error'),
+    log = require('fancy-log'),
     through = require('through2'),
     chalk = require('chalk'),
     pluralize = require('pluralize');
@@ -16,7 +17,7 @@ var fs = require('fs'),
 module.exports = function(options) {
     // Show the user an error message if no path is defined.
     if (!options || !options.path) {
-        throw new gutil.PluginError('gulp-phpcs', 'You have to specify a path for the file reporter!');
+        throw new PluginError('gulp-phpcs', 'You have to specify a path for the file reporter!');
     }
 
     var collectedErrors = [];
@@ -50,7 +51,7 @@ module.exports = function(options) {
             // Write the error output to the defined file
             fs.writeFile(options.path, report, function(err) {
                 if (err) {
-                    stream.emit('error', new gutil.PluginError('gulp-phpcs', err));
+                    stream.emit('error', new PluginError('gulp-phpcs', err));
                     callback();
 
                     return;
@@ -64,7 +65,7 @@ module.exports = function(options) {
                 );
 
                 // And output it.
-                gutil.log(message);
+                log.info(message);
 
                 callback();
             });

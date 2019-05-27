@@ -1,4 +1,4 @@
-var gutil = require('gulp-util'),
+var PluginError = require('plugin-error'),
     fs = require('fs');
 
 /**
@@ -13,11 +13,11 @@ var gutil = require('gulp-util'),
  */
 module.exports = function(name, options) {
     if (typeof name !== 'string') {
-        throw new gutil.PluginError('gulp-phpcs', 'Reporter name must be a string');
+        throw new PluginError('gulp-phpcs', 'Reporter name must be a string');
     }
 
     if (name === 'index') {
-        throw new gutil.PluginError('gulp-phpcs', 'Reporter cannot be named "index"');
+        throw new PluginError('gulp-phpcs', 'Reporter cannot be named "index"');
     }
 
     var fileName = './' + name + '.js',
@@ -29,7 +29,7 @@ module.exports = function(name, options) {
             throw error;
         }
 
-        throw new gutil.PluginError('gulp-phpcs', 'There is no reporter "' + name + '"');
+        throw new PluginError('gulp-phpcs', 'There is no reporter "' + name + '"');
     }
 
     return reporter;

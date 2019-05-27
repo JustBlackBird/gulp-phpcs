@@ -1,4 +1,4 @@
-var gutil = require('gulp-util'),
+var PluginError = require('plugin-error'),
     through = require('through2'),
     chalk = require('chalk');
 
@@ -32,7 +32,7 @@ module.exports = function(options) {
                     var errorMessage = 'PHP Code Sniffer failed' +
                         ' on ' + chalk.magenta(file.path);
 
-                    this.emit('error', new gutil.PluginError('gulp-phpcs', errorMessage));
+                    this.emit('error', new PluginError('gulp-phpcs', errorMessage));
                     callback();
 
                     return;
@@ -50,7 +50,7 @@ module.exports = function(options) {
             // We have to check "failOnFirst" flag to make sure we did not
             // throw the error before.
             if (phpcsError && !options.failOnFirst) {
-                this.emit('error', new gutil.PluginError(
+                this.emit('error', new PluginError(
                     'gulp-phpcs',
                     'PHP Code Sniffer failed on \n    ' + badFiles.join('\n    ')
                 ));
