@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.0
+
+- Remove deprecated `gulp-utils`
+- Drop support of node.js < 6.0
+
 ## 2.2.0
 
 - Add `--ignore` option.

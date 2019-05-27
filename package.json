@@ -1,6 +1,6 @@
 {
   "name": "gulp-phpcs",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "PHP Code Sniffer plugin for Gulp",
   "license": "MIT",
   "repository": {
