@@ -537,7 +537,22 @@ describe('PHPCS', function() {
 
             plugin.on('data', function(file) {
                 var output = file.phpcsReport.output.trim();
-                expect(output).to.not.contain('--collors');
+                expect(output).to.not.contain('--colors');
+                done();
+            });
+
+            plugin.write(fakeFile);
+        });
+
+        it('should run the command from a given directory if "cwd" option is passed', function(done) {
+            var plugin = phpcs({
+                bin: './test/fixture/args',
+                cwd: './'
+            });
+
+            plugin.on('data', function(file) {
+                var output = file.phpcsReport.output.trim();
+                expect(output).to.be.equal('-');
                 done();
             });
 
