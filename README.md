@@ -128,6 +128,12 @@ Ignore a list of paths
 
 This option is equivalent to Code Sniffer `--ignore` option.
 
+#### options.cwd
+
+Type: `String`
+
+Set an explicit current working directory from which the `phpcs` command should run.
+
 #### options.colors
 
 Type: `Boolean`
