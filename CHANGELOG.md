@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.0
+
+- Move `fancy-log` and `plugin-error` dependencies from devDependency to dependency section.
+- Add "cwd" option.
+
 ## 3.0.0
 
 - Remove deprecated `gulp-utils`
