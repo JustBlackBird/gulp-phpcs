@@ -13,6 +13,7 @@ var util = require('util'),
  */
 var buildCommand = function(opts) {
     var args = [];
+    var commandOptions = {};
 
     if (opts.hasOwnProperty('standard')) {
         args.push('--standard=' + opts.standard);
@@ -67,12 +68,17 @@ var buildCommand = function(opts) {
         args.push('--colors');
     }
 
+    if (opts.hasOwnProperty('cwd') && opts.cwd) {
+        commandOptions.cwd = opts.cwd;
+    }
+
     // Finally specify the file is streamed on stdin.
     args.push('-');
 
     return {
         bin: opts.bin || 'phpcs',
-        args: args
+        args: args,
+        options: commandOptions
     };
 };
 
@@ -122,13 +128,14 @@ var resolveCommand = (function(){
  *
  * @param {String} bin Shell command (without arguments) that should be performed
  * @param {Array} args List of arguments that should be passed to the Shell command.
+ * @param {Array} options Options to be passed into the child_process.spawn.
  * @param {Object} file A file from Gulp pipeline that should be sniffed.
  * @param {Function} callback A function which will be called when Code Sniffer is
  * done or an error occurs. It will receive three arguments: error instance, exit
  * code and output of the Code Sniffer. The last two arguments will be passed in
  * only if there was no error during execution.
  */
-var runCodeSniffer = function(bin, args, file, callback) {
+var runCodeSniffer = function(bin, args, options, file, callback) {
     resolveCommand(bin, function(error, resolvedBin) {
         if (error) {
             // A real error occurs during command resolving. We can do nothing
@@ -151,7 +158,7 @@ var runCodeSniffer = function(bin, args, file, callback) {
         var stdout = '';
         // child_process.spawn is used instead of child_process.exec because of
         // its flexibility.
-        var phpcs = spawn(resolvedBin, args);
+        var phpcs = spawn(resolvedBin, args, options);
 
         phpcs.on('error', function(error) {
             callback(error);
@@ -206,7 +213,7 @@ var phpcsPlugin = function(options) {
             return;
         }
 
-        runCodeSniffer(command.bin, command.args, file, function(runError, exitCode, output) {
+        runCodeSniffer(command.bin, command.args, command.options, file, function(runError, exitCode, output) {
             if (runError) {
                 // Something is totally wrong. It seems that execution of Code Sniffer
                 // failed (not because of non-zero exit code of PHPCS).
